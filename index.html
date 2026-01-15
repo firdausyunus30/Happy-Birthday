@@ -136,6 +136,10 @@
       transform: translateY(0) scale(1);
     }
 
+    .section.hidden {
+      display: none;
+    }
+
     .title {
       font-size: clamp(1.9rem, 6vw, 2.6rem);
       margin-bottom: 12px;
@@ -298,10 +302,17 @@
 
       // Fade out countdown, fade in celebration
       countdownSection.classList.remove('show');
+      countdownSection.setAttribute('aria-hidden', 'true');
       celebrationSection.setAttribute('aria-hidden', 'false');
 
       // Allow CSS transition to play smoothly
       setTimeout(() => {
+        celebrationSection.classList.add('show');
+      }, 50);
+
+      // After fade, remove countdown space so content shifts up
+      setTimeout(() => {
+        countdownSection.classList.add('hidden');
         celebrationSection.classList.add('show');
       }, 50);
 
