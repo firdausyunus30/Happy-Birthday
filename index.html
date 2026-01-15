@@ -41,7 +41,6 @@
       50% { background-position: 100% 50%; }
     }
 
-    /* Floating hearts animation */
     .glow {
       position: absolute;
       width: 400px;
@@ -52,40 +51,14 @@
       z-index: 0;
     }
 
-    .glow:nth-child(1) { 
-      top: 5%; 
-      left: 12%; 
-      animation-delay: 0s;
-      animation-duration: 18s;
-    }
-    
-    .glow:nth-child(2) { 
-      bottom: 8%; 
-      right: 10%; 
-      animation-delay: 4s;
-      animation-duration: 20s;
-    }
-    
-    .glow:nth-child(3) { 
-      top: 30%; 
-      right: 25%; 
-      animation-delay: 8s;
-      animation-duration: 16s;
-    }
+    .glow:nth-child(1) { top: 5%; left: 12%; animation-delay: 0s; animation-duration: 18s; }
+    .glow:nth-child(2) { bottom: 8%; right: 10%; animation-delay: 4s; animation-duration: 20s; }
+    .glow:nth-child(3) { top: 30%; right: 25%; animation-delay: 8s; animation-duration: 16s; }
 
     @keyframes float {
-      0%, 100% { 
-        transform: translateY(0) scale(1); 
-        opacity: 0.9; 
-      }
-      33% {
-        transform: translateY(-30px) scale(1.1);
-        opacity: 0.75;
-      }
-      66% {
-        transform: translateY(-15px) scale(0.95);
-        opacity: 0.85;
-      }
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.9; }
+      33% { transform: translateY(-30px) scale(1.1); opacity: 0.75; }
+      66% { transform: translateY(-15px) scale(0.95); opacity: 0.85; }
     }
 
     .card {
@@ -99,22 +72,14 @@
       z-index: 1;
       backdrop-filter: blur(16px);
       border: 2px solid rgba(255, 255, 255, 0.7);
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                  box-shadow 0.6s ease,
-                  border-color 0.6s ease;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease, border-color 0.6s ease;
       margin: 10px auto 24px;
       animation: cardEntrance 1s ease-out;
     }
 
     @keyframes cardEntrance {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .card:hover {
@@ -143,14 +108,8 @@
     }
 
     @keyframes fadeSlideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .timer {
@@ -162,25 +121,17 @@
     }
 
     @keyframes fadeSlideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .time-box {
       background: linear-gradient(145deg, #ffffff, #ffeaf3);
       border-radius: 16px;
       padding: 16px 10px;
-      box-shadow: 0 4px 12px rgba(255, 143, 177, 0.15),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 12px rgba(255, 143, 177, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       border: 1.5px solid rgba(255, 255, 255, 0.9);
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  box-shadow 0.4s ease;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
       position: relative;
       overflow: hidden;
     }
@@ -196,21 +147,13 @@
       transition: left 0.6s ease;
     }
 
-    .time-box:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(255, 143, 177, 0.25),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    }
-
-    .time-box:hover::before {
-      left: 100%;
-    }
+    .time-box:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 20px rgba(255, 143, 177, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
+    .time-box:hover::before { left: 100%; }
 
     .time-value {
       display: block;
       font-size: clamp(1.6rem, 5vw, 2.2rem);
       font-weight: 700;
-      color: var(--text);
       animation: pulse 2s ease-in-out infinite;
       background: linear-gradient(135deg, #2c1b2f 0%, #ff8fb1 100%);
       -webkit-background-clip: text;
@@ -237,21 +180,262 @@
       animation: fadeSlideUp 0.8s ease-out 0.9s both;
     }
 
+    /* Food Hunting Journey Styles */
+    .journey {
+      margin-top: 18px;
+      padding: 20px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 26px rgba(232, 150, 182, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(6px);
+      animation: fadeIn 1s ease-out 0.4s both;
+    }
+
+    .journey-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .journey-title-main {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+
+    .journey-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 10px;
+    }
+
+    /* Journey Card Container with Arrow */
+    .journey-item {
+      position: relative;
+      animation: cardSlideIn 0.5s ease-out both;
+    }
+
+    @keyframes cardSlideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Arrow Connector */
+    .journey-arrow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 0;
+      position: relative;
+    }
+
+    .journey-arrow svg {
+      width: 32px;
+      height: 32px;
+      color: var(--pink);
+      filter: drop-shadow(0 2px 4px rgba(255, 143, 177, 0.3));
+      animation: arrowBounce 1.5s ease-in-out infinite;
+    }
+
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
+    /* Dotted Line Behind Arrow */
+    .journey-arrow::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--pink) 0px,
+        var(--pink) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+
+    .journey-card {
+      padding: 16px;
+      border-radius: 16px;
+      background: #fff;
+      border: 2px solid rgba(255, 143, 177, 0.2);
+      box-shadow: 0 8px 24px rgba(232, 150, 182, 0.18);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .journey-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(232, 150, 182, 0.25);
+      border-color: var(--pink);
+    }
+
+    /* Shimmer Effect on Hover */
+    .journey-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s ease;
+      z-index: 1;
+    }
+
+    .journey-card:hover::before {
+      left: 100%;
+    }
+
+    /* Stop Number Badge */
+    .journey-badge {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      background: linear-gradient(135deg, var(--pink) 0%, #cdb4ff 100%);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(255, 143, 177, 0.4);
+      z-index: 2;
+    }
+
+    .journey-image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffeaf3, #f7e7f0);
+      margin-bottom: 12px;
+      margin-top: 6px;
+    }
+
+    .journey-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .journey-card:hover .journey-image img {
+      transform: scale(1.05);
+    }
+
+    .journey-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 6px;
+      text-align: left;
+    }
+
+    .journey-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.55;
+      text-align: left;
+    }
+
+    .journey-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+      align-items: center;
+    }
+
+    .journey-counter {
+      font-size: 0.9rem;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    /* Progress Dots */
+    .journey-progress {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .journey-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 143, 177, 0.3);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .journey-dot.active {
+      background: linear-gradient(135deg, var(--pink), #cdb4ff);
+      transform: scale(1.3);
+      box-shadow: 0 2px 8px rgba(255, 143, 177, 0.5);
+    }
+
+    .journey-button {
+      padding: 14px 28px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+      background: linear-gradient(135deg, #ff8fb1 0%, #cdb4ff 100%);
+      box-shadow: 0 10px 24px rgba(232, 150, 182, 0.4);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, opacity 0.2s ease;
+      min-width: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .journey-button svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .journey-button:hover:not(:disabled) svg {
+      transform: translateX(4px);
+    }
+
+    .journey-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .journey-button:hover:not(:disabled) {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 14px 32px rgba(232, 150, 182, 0.5);
+    }
+
     .section {
       opacity: 0;
       transform: translateY(15px) scale(0.98);
-      transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                  transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .section.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .section.hidden {
-      display: none;
-    }
+    .section.show { opacity: 1; transform: translateY(0) scale(1); }
+    .section.hidden { display: none; }
 
     .title {
       font-size: clamp(1.9rem, 6vw, 2.6rem);
@@ -265,17 +449,9 @@
     }
 
     @keyframes celebration {
-      0% {
-        opacity: 0;
-        transform: scale(0.5) rotate(-5deg);
-      }
-      50% {
-        transform: scale(1.1) rotate(2deg);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
+      0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
+      50% { transform: scale(1.1) rotate(2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
     }
 
     .message {
@@ -287,12 +463,8 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .note {
@@ -310,30 +482,21 @@
       border-radius: 20px;
       overflow: hidden;
       background: linear-gradient(135deg, #ffeaf3, #f7e7f0);
-      box-shadow: 0 8px 24px rgba(232, 150, 182, 0.3),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 24px rgba(232, 150, 182, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.7);
       margin-bottom: 18px;
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  box-shadow 0.6s ease;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;
       animation: videoReveal 1s ease-out;
       border: 2px solid rgba(255, 255, 255, 0.6);
     }
 
     @keyframes videoReveal {
-      from {
-        opacity: 0;
-        transform: scale(0.9) rotateY(-10deg);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) rotateY(0deg);
-      }
+      from { opacity: 0; transform: scale(0.9) rotateY(-10deg); }
+      to { opacity: 1; transform: scale(1) rotateY(0deg); }
     }
 
     .video-wrapper:hover {
       transform: scale(1.02);
-      box-shadow: 0 12px 32px rgba(232, 150, 182, 0.4),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      box-shadow: 0 12px 32px rgba(232, 150, 182, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.7);
     }
 
     .video-wrapper video {
@@ -350,7 +513,6 @@
   </style>
 </head>
 <body>
-  <!-- Background glows -->
   <div class="glow"></div>
   <div class="glow"></div>
   <div class="glow"></div>
@@ -358,7 +520,7 @@
   <main class="card" aria-live="polite">
     <!-- Countdown Section -->
     <section id="countdown-section" class="section show">
-      <p class="eyebrow">Countdown to someone special ❤️</p>
+      <p class="eyebrow">Countdown to someone special</p>
       <h1 class="headline">A little surprise is on its way</h1>
       <div class="timer" role="timer" aria-live="polite">
         <div class="time-box">
@@ -374,43 +536,64 @@
           <span class="time-label">Seconds</span>
         </div>
       </div>
-      <p class="subtext">Hold on, love. The magic moment arrives soon ✨</p>
+      <p class="subtext">Hold on, love. The magic moment arrives soon</p>
+
+      <!-- Food Hunting Journey -->
+      <div class="journey" aria-live="polite">
+        <div class="journey-header">
+          <p class="journey-title-main">FOOD HUNTING JOURNEY</p>
+        </div>
+        
+        <!-- Progress Dots -->
+        <div class="journey-progress" id="journey-progress">
+          <div class="journey-dot"></div>
+          <div class="journey-dot"></div>
+          <div class="journey-dot"></div>
+          <div class="journey-dot"></div>
+        </div>
+        
+        <div class="journey-list" id="journey-list"></div>
+        
+        <div class="journey-footer">
+          <p class="journey-counter" id="journey-counter">Tap start to reveal the first stop.</p>
+          <button class="journey-button" id="journey-action" type="button">
+            <span>Start Journey</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- Celebration Section -->
     <section id="celebration-section" class="section" aria-hidden="true">
       <div class="video-wrapper" aria-hidden="true">
-        <!-- Local video file placed in the same folder -->
         <video id="love-video" playsinline muted loop controls autoplay poster="https://images.unsplash.com/photo-1511288593014-8acb33db1c83?auto=format&fit=crop&w=1200&q=80">
           <source src="special.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
-      <h1 class="title">Happy Birthday <br> Wan Sulha </h1>
+      <h1 class="title">Happy Birthday <br> Wan Sulha</h1>
       <p class="message" id="love-message">
         My dearest, every sunrise feels softer because I wake up thinking of you. Every laugh feels warmer because it echoes with your joy. Thank you for being my favorite hello, my sweetest calm, and my forever safe place. On your birthday, I want you to remember that my heart is yours in every season, every quiet moment, and every adventure ahead. I love you more than words can hold, and I promise to spend every day proving it. Happy birthday, my love.
       </p>
-      <p class="note">Confetti and a soft melody just for you. 🩷</p>
+      <p class="note">Confetti and a soft melody just for you.</p>
     </section>
 
-    <!-- Soft romantic background music (looped) -->
     <audio id="bg-music" loop preload="auto">
       <source src="https://cdn.pixabay.com/download/audio/2022/08/11/audio_5b2bf35e95.mp3?filename=gentle-happy-soft-piano-115278.mp3" type="audio/mpeg">
     </audio>
   </main>
 
-  <!-- Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
 
   <script>
-    // ===== Configuration: easily edit target date or message =====
-    // Add ?demo=1 or #demo to the URL to see a 20-second preview immediately.
-    // Target moment: 15 January 2026, 12:50 PM (Malaysia time, UTC+8)
     const params = new URLSearchParams(window.location.search);
     const isDemo = params.get('demo') === '1' || window.location.hash === '#demo';
     const targetDate = isDemo
-      ? new Date(Date.now() + 20_000) // quick preview
-      : new Date('2026-01-15T12:50:00+08:00');
+      ? new Date(Date.now() + 20_000)
+      : new Date('2026-01-16T00:00:00+08:00');
 
     const countdownSection = document.getElementById('countdown-section');
     const celebrationSection = document.getElementById('celebration-section');
@@ -419,19 +602,17 @@
     const secondsEl = document.getElementById('seconds');
     const bgMusic = document.getElementById('bg-music');
     const loveVideo = document.getElementById('love-video');
+    const journeyList = document.getElementById('journey-list');
+    const journeyCounter = document.getElementById('journey-counter');
+    const journeyAction = document.getElementById('journey-action');
+     const journeyProgress = document.getElementById('journey-progress');
 
     let countdownInterval = null;
     let hasCelebrated = false;
+    let currentStep = 0;
 
-    /**
-     * Pads a number to two digits (e.g., 5 -> "05").
-     */
     const pad = (num) => String(num).padStart(2, '0');
 
-    /**
-     * Updates the countdown display every second.
-     * Switches to celebration state when target time is reached.
-     */
     function startCountdown() {
       const update = () => {
         const now = new Date();
@@ -456,9 +637,6 @@
       countdownInterval = setInterval(update, 1000);
     }
 
-    /**
-     * Handles the celebration state: fade transition, confetti, and music.
-     */
     function triggerCelebration() {
       if (hasCelebrated) return;
       hasCelebrated = true;
@@ -467,23 +645,19 @@
         clearInterval(countdownInterval);
       }
 
-      // Fade out countdown, fade in celebration
       countdownSection.classList.remove('show');
       countdownSection.setAttribute('aria-hidden', 'true');
       celebrationSection.setAttribute('aria-hidden', 'false');
 
-      // Allow CSS transition to play smoothly
       setTimeout(() => {
         celebrationSection.classList.add('show');
       }, 50);
 
-      // After fade, remove countdown space so content shifts up
       setTimeout(() => {
         countdownSection.classList.add('hidden');
         celebrationSection.classList.add('show');
       }, 50);
 
-      // Launch confetti in short bursts
       const duration = 3000;
       const end = Date.now() + duration;
       (function frame() {
@@ -498,17 +672,14 @@
         }
       })();
 
-      // Try to autoplay background music; ignore errors due to browser policies.
       bgMusic.volume = 0.4;
       const playPromise = bgMusic.play();
       if (playPromise && typeof playPromise.catch === 'function') {
         playPromise.catch(() => {
-          // If autoplay is blocked, a user gesture will start it automatically on click.
           document.body.addEventListener('click', () => bgMusic.play(), { once: true });
         });
       }
 
-      // Try to autoplay video with sound: start muted (more likely allowed), then unmute.
       if (loveVideo) {
         const unmuteAndPlay = () => {
           loveVideo.muted = false;
@@ -528,7 +699,6 @@
         if (videoPromise && typeof videoPromise.then === 'function') {
           videoPromise
             .then(() => {
-              // Give a moment, then unmute and keep playing.
               setTimeout(unmuteAndPlay, 200);
             })
             .catch(() => {
@@ -540,9 +710,139 @@
       }
     }
 
-    // Start countdown when the page is ready
-    window.addEventListener('DOMContentLoaded', startCountdown);
+     // Food Hunting Journey Data (local images)
+     const journeySteps = [
+       {
+         title: 'Breakfast Kickoff',
+         desc: 'Random breakfast kat Batu Pahat',
+         img: 'breakfast.jpeg'
+       },
+       {
+         title: 'IKEA Bites',
+         desc: 'Ikea food just so so puas bfr final paper',
+         img: 'ikea.jpeg'
+       },
+       {
+         title: 'Dessert in Melaka',
+         desc: 'Jalan jalan kat Melaka ',
+         img: 'desert melaka.jpeg'
+       },
+       {
+         title: 'Makan Bun',
+         desc: 'Makan Bun Hitam tu sedap tapi tak ingat nama kedai huhu ',
+         img: 'makan bun.jpeg'
+       },
+       {
+         title: 'llallao Treat',
+         desc: 'Last Dessert after long day of shopping.',
+         img: 'llallao dessert.jpeg'
+       },
+       {
+         title: 'Toye T20 Night',
+         desc: 'Cuba cuba toye T20',
+         img: 'toye t20.jpeg'
+       }
+     ];
+
+     // Arrow SVG template
+     const arrowSVG = `
+       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+         <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+       </svg>
+     `;
+
+    function appendJourneyCard(step, index) {
+      if (!journeyList) return;
+
+       // Add arrow before card (except first card)
+       if (index > 0) {
+         const arrow = document.createElement('div');
+         arrow.className = 'journey-arrow';
+         arrow.innerHTML = arrowSVG;
+         arrow.style.animationDelay = `${index * 0.1}s`;
+         journeyList.appendChild(arrow);
+       }
+
+      const item = document.createElement('div');
+      item.className = 'journey-item';
+      item.style.animationDelay = `${index * 0.15}s`;
+      
+      item.innerHTML = `
+        <div class="journey-card">
+          <span class="journey-badge">Stop ${index + 1}</span>
+          <div class="journey-image">
+            <img src="${step.img}" alt="${step.title}" loading="lazy">
+          </div>
+          <p class="journey-title">${step.title}</p>
+          <p class="journey-desc">${step.desc}</p>
+        </div>
+      `;
+      
+      journeyList.appendChild(item);
+
+       // Update progress dots
+       if (journeyProgress) {
+         const dots = journeyProgress.querySelectorAll('.journey-dot');
+         if (dots[index]) {
+           dots[index].classList.add('active');
+         }
+       }
+    }
+
+    function updateJourneyCounter() {
+      if (!journeyCounter) return;
+      const shown = Math.min(currentStep, journeySteps.length);
+      if (shown === 0) {
+        journeyCounter.textContent = 'Tap start to reveal the first stop.';
+      } else if (shown >= journeySteps.length) {
+        journeyCounter.textContent = `All ${journeySteps.length} stops revealed!`;
+      } else {
+        journeyCounter.textContent = `${shown} of ${journeySteps.length} stops revealed`;
+      }
+    }
+
+    function handleJourneyAction() {
+      if (currentStep >= journeySteps.length) return;
+      appendJourneyCard(journeySteps[currentStep], currentStep);
+      currentStep += 1;
+      updateJourneyCounter();
+
+      if (currentStep >= journeySteps.length) {
+        journeyAction.innerHTML = `
+          <span>All Done</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        `;
+        journeyAction.disabled = true;
+      } else {
+        journeyAction.innerHTML = `
+          <span>Next Stop</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        `;
+      }
+    }
+
+    function initJourney() {
+      if (!journeyAction) return;
+      if (journeyProgress) {
+        journeyProgress.innerHTML = '';
+        journeySteps.forEach(() => {
+          const dot = document.createElement('div');
+          dot.className = 'journey-dot';
+          journeyProgress.appendChild(dot);
+        });
+      }
+      updateJourneyCounter();
+      journeyAction.addEventListener('click', handleJourneyAction);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      startCountdown();
+      initJourney();
+    });
   </script>
 </body>
 </html>
-
