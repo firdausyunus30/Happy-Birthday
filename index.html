@@ -212,7 +212,7 @@
     <section id="celebration-section" class="section" aria-hidden="true">
       <div class="video-wrapper" aria-hidden="true">
         <!-- Local video file placed in the same folder -->
-        <video id="love-video" playsinline muted loop controls poster="https://images.unsplash.com/photo-1511288593014-8acb33db1c83?auto=format&fit=crop&w=1200&q=80">
+        <video id="love-video" playsinline muted loop controls autoplay poster="https://images.unsplash.com/photo-1511288593014-8acb33db1c83?auto=format&fit=crop&w=1200&q=80">
           <source src="special.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
@@ -236,12 +236,12 @@
   <script>
     // ===== Configuration: easily edit target date or message =====
     // Add ?demo=1 or #demo to the URL to see a 20-second preview immediately.
-    // Target moment: 15 January 2026, 12:23 PM (Malaysia time, UTC+8)
+    // Target moment: 15 January 2026, 12:26 PM (Malaysia time, UTC+8)
     const params = new URLSearchParams(window.location.search);
     const isDemo = params.get('demo') === '1' || window.location.hash === '#demo';
     const targetDate = isDemo
       ? new Date(Date.now() + 20_000) // quick preview
-      : new Date('2026-01-15T12:23:00+08:00');
+      : new Date('2026-01-15T12:26:00+08:00');
 
     const countdownSection = document.getElementById('countdown-section');
     const celebrationSection = document.getElementById('celebration-section');
@@ -339,19 +339,34 @@
         });
       }
 
-      // Try to play the video with sound; if blocked, wait for first tap to unmute + play.
+      // Try to autoplay video with sound: start muted (more likely allowed), then unmute.
       if (loveVideo) {
-        loveVideo.muted = false;
-        loveVideo.volume = 1;
+        const unmuteAndPlay = () => {
+          loveVideo.muted = false;
+          loveVideo.volume = 1;
+          const p = loveVideo.play();
+          if (p && typeof p.catch === 'function') {
+            p.catch(() => {
+              document.body.addEventListener('click', () => loveVideo.play(), { once: true });
+            });
+          }
+        };
+
+        loveVideo.muted = true;
+        loveVideo.autoplay = true;
         const videoPromise = loveVideo.play();
-        if (videoPromise && typeof videoPromise.catch === 'function') {
-          videoPromise.catch(() => {
-            const resumeVideo = () => {
-              loveVideo.muted = false;
-              loveVideo.play();
-            };
-            document.body.addEventListener('click', resumeVideo, { once: true });
-          });
+
+        if (videoPromise && typeof videoPromise.then === 'function') {
+          videoPromise
+            .then(() => {
+              // Give a moment, then unmute and keep playing.
+              setTimeout(unmuteAndPlay, 200);
+            })
+            .catch(() => {
+              document.body.addEventListener('click', unmuteAndPlay, { once: true });
+            });
+        } else {
+          document.body.addEventListener('click', unmuteAndPlay, { once: true });
         }
       }
     }
