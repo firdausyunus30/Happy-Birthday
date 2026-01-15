@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Surprise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #ff8fb1;
+      --soft-pink: #ffe4ed;
+      --lavender: #e6d7ff;
+      --text: #2c1b2f;
+      --muted: #5f4a60;
+      --card: rgba(255, 255, 255, 0.9);
+      --shadow: 0 18px 45px rgba(232, 150, 182, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffe2ec 0%, #f6d3ff 50%, #d8ecff 100%);
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle floating glow elements */
+    .glow {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle at center, rgba(255, 143, 177, 0.35), transparent 60%);
+      filter: blur(30px);
+      animation: float 12s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .glow:nth-child(1) { top: 5%; left: 12%; animation-delay: 0s; }
+    .glow:nth-child(2) { bottom: 8%; right: 10%; animation-delay: 3s; }
+    .glow:nth-child(3) { top: 30%; right: 25%; animation-delay: 6s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); opacity: 0.85; }
+      50% { transform: translateY(-20px); opacity: 0.7; }
+    }
+
+    .card {
+      width: min(560px, 95vw);
+      background: var(--card);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 28px 26px 32px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 20px 55px rgba(232, 150, 182, 0.45);
+    }
+
+    .eyebrow {
+      font-size: 0.95rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .headline {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .timer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 12px 0 6px;
+    }
+
+    .time-box {
+      background: linear-gradient(145deg, #fff, #ffeaf3);
+      border-radius: 14px;
+      padding: 14px 10px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .time-value {
+      display: block;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .time-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .subtext {
+      margin-top: 6px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .section {
+      opacity: 0;
+      transform: translateY(10px) scale(0.99);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .section.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .title {
+      font-size: clamp(1.9rem, 6vw, 2.6rem);
+      margin-bottom: 12px;
+    }
+
+    .message {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      opacity: 0.85;
+    }
+
+    .video-wrapper {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f7e7f0;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 12px 28px rgba(232, 150, 182, 0.25);
+      margin-bottom: 18px;
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (min-width: 640px) {
+      .card { padding: 34px 34px 38px; }
+      .headline { font-size: 1.65rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background glows -->
+  <div class="glow"></div>
+  <div class="glow"></div>
+  <div class="glow"></div>
+
+  <main class="card" aria-live="polite">
+    <!-- Countdown Section -->
+    <section id="countdown-section" class="section show">
+      <p class="eyebrow">Countdown to something special ❤️</p>
+      <h1 class="headline">A little surprise is on its way</h1>
+      <div class="timer" role="timer" aria-live="polite">
+        <div class="time-box">
+          <span id="hours" class="time-value">00</span>
+          <span class="time-label">Hours</span>
+        </div>
+        <div class="time-box">
+          <span id="minutes" class="time-value">00</span>
+          <span class="time-label">Minutes</span>
+        </div>
+        <div class="time-box">
+          <span id="seconds" class="time-value">00</span>
+          <span class="time-label">Seconds</span>
+        </div>
+      </div>
+      <p class="subtext">Hold on, love. The magic moment arrives soon ✨</p>
+    </section>
+
+    <!-- Celebration Section -->
+    <section id="celebration-section" class="section" aria-hidden="true">
+      <div class="video-wrapper" aria-hidden="true">
+        <!-- Local video file placed in the same folder -->
+        <video id="love-video" playsinline muted loop controls poster="https://images.unsplash.com/photo-1511288593014-8acb33db1c83?auto=format&fit=crop&w=1200&q=80">
+          <source src="special.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <h1 class="title">🎉 Happy Birthday Wan Sulha 🎂</h1>
+      <p class="message" id="love-message">
+        My dearest, every sunrise feels softer because I wake up thinking of you. Every laugh feels warmer because it echoes with your joy. Thank you for being my favorite hello, my sweetest calm, and my forever safe place. On your birthday, I want you to remember that my heart is yours in every season, every quiet moment, and every adventure ahead. I love you more than words can hold, and I promise to spend every day proving it. Happy birthday, my love.
+      </p>
+      <p class="note">Confetti and a soft melody just for you. 🩷</p>
+    </section>
+
+    <!-- Soft romantic background music (looped) -->
+    <audio id="bg-music" loop preload="auto">
+      <source src="https://cdn.pixabay.com/download/audio/2022/08/11/audio_5b2bf35e95.mp3?filename=gentle-happy-soft-piano-115278.mp3" type="audio/mpeg">
+    </audio>
+  </main>
+
+  <!-- Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+
+  <script>
+    // ===== Configuration: easily edit target date or message =====
+    // Add ?demo=1 or #demo to the URL to see a 20-second preview immediately.
+    // Target moment: 15 January 2026, 11:53 AM (Malaysia time, UTC+8)
+    const params = new URLSearchParams(window.location.search);
+    const isDemo = params.get('demo') === '1' || window.location.hash === '#demo';
+    const targetDate = isDemo
+      ? new Date(Date.now() + 20_000) // quick preview
+      : new Date('2026-01-15T11:53:00+08:00');
+
+    const countdownSection = document.getElementById('countdown-section');
+    const celebrationSection = document.getElementById('celebration-section');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const bgMusic = document.getElementById('bg-music');
+    const loveVideo = document.getElementById('love-video');
+
+    let countdownInterval = null;
+    let hasCelebrated = false;
+
+    /**
+     * Pads a number to two digits (e.g., 5 -> "05").
+     */
+    const pad = (num) => String(num).padStart(2, '0');
+
+    /**
+     * Updates the countdown display every second.
+     * Switches to celebration state when target time is reached.
+     */
+    function startCountdown() {
+      const update = () => {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          triggerCelebration();
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        hoursEl.textContent = pad(hours);
+        minutesEl.textContent = pad(minutes);
+        secondsEl.textContent = pad(seconds);
+      };
+
+      update();
+      countdownInterval = setInterval(update, 1000);
+    }
+
+    /**
+     * Handles the celebration state: fade transition, confetti, and music.
+     */
+    function triggerCelebration() {
+      if (hasCelebrated) return;
+      hasCelebrated = true;
+
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
+
+      // Fade out countdown, fade in celebration
+      countdownSection.classList.remove('show');
+      celebrationSection.setAttribute('aria-hidden', 'false');
+
+      // Allow CSS transition to play smoothly
+      setTimeout(() => {
+        celebrationSection.classList.add('show');
+      }, 50);
+
+      // Launch confetti in short bursts
+      const duration = 3000;
+      const end = Date.now() + duration;
+      (function frame() {
+        confetti({
+          particleCount: 70,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#ff8fb1', '#ffc6d9', '#ffe4ed', '#cdb4ff']
+        });
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+
+      // Try to autoplay background music; ignore errors due to browser policies.
+      bgMusic.volume = 0.4;
+      const playPromise = bgMusic.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {
+          // If autoplay is blocked, a user gesture will start it automatically on click.
+          document.body.addEventListener('click', () => bgMusic.play(), { once: true });
+        });
+      }
+
+      // Gently try to play the video as well (muted autoplay is more likely allowed).
+      if (loveVideo) {
+        loveVideo.muted = true;
+        const videoPromise = loveVideo.play();
+        if (videoPromise && typeof videoPromise.catch === 'function') {
+          videoPromise.catch(() => {
+            document.body.addEventListener('click', () => loveVideo.play(), { once: true });
+          });
+        }
+      }
+    }
+
+    // Start countdown when the page is ready
+    window.addEventListener('DOMContentLoaded', startCountdown);
+  </script>
+</body>
+</html>
+
