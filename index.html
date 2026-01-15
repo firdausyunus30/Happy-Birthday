@@ -3,196 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Surprise</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Birthday Surprise Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --pink: #ff8fb1;
-      --soft-pink: #ffe4ed;
-      --lavender: #e6d7ff;
-      --text: #2c1b2f;
-      --muted: #5f4a60;
-      --card: rgba(255, 255, 255, 0.95);
-      --shadow: 0 20px 60px rgba(232, 150, 182, 0.4);
-    }
-
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    :root {
+      --pink: #ff8fb1;
+      --soft-pink: #ffe4ed;
+      --lavender: #e6d7ff;
+      --purple: #cdb4ff;
+      --light-blue: #d8ecff;
+      --text: #2c1b2f;
+      --muted: #5f4a60;
+    }
+
     body {
-      min-height: 100vh;
-      padding: 18px 14px 32px;
-      background: linear-gradient(135deg, #ffe2ec 0%, #f6d3ff 50%, #d8ecff 100%);
       font-family: 'Poppins', system-ui, -apple-system, sans-serif;
-      color: var(--text);
-      position: relative;
-      overflow-x: hidden;
-      animation: gradientShift 15s ease infinite;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffe2ec, #f6d3ff, #d8ecff);
       background-size: 200% 200%;
+      animation: gradient-shift 15s ease infinite;
+      padding: 16px;
+      padding-bottom: 32px;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
+    /* Floating Glows */
     .glow {
       position: absolute;
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle at center, rgba(255, 143, 177, 0.4), transparent 70%);
+      border-radius: 50%;
       filter: blur(40px);
-      animation: float 15s ease-in-out infinite;
       z-index: 0;
+      pointer-events: none;
+    }
+    .glow-1 {
+      background: radial-gradient(circle at center, rgba(255,143,177,0.4), transparent 70%);
+      top: 5%;
+      left: 12%;
+      animation: float 18s ease-in-out infinite;
+    }
+    .glow-2 {
+      background: radial-gradient(circle at center, rgba(255,143,177,0.4), transparent 70%);
+      bottom: 8%;
+      right: 10%;
+      animation: float 20s ease-in-out infinite 4s;
+    }
+    .glow-3 {
+      background: radial-gradient(circle at center, rgba(205,180,255,0.4), transparent 70%);
+      top: 30%;
+      right: 25%;
+      animation: float 16s ease-in-out infinite 8s;
     }
 
-    .glow:nth-child(1) { top: 5%; left: 12%; animation-delay: 0s; animation-duration: 18s; }
-    .glow:nth-child(2) { bottom: 8%; right: 10%; animation-delay: 4s; animation-duration: 20s; }
-    .glow:nth-child(3) { top: 30%; right: 25%; animation-delay: 8s; animation-duration: 16s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); opacity: 0.9; }
-      33% { transform: translateY(-30px) scale(1.1); opacity: 0.75; }
-      66% { transform: translateY(-15px) scale(0.95); opacity: 0.85; }
-    }
-
-    .card {
+    /* Main Card */
+    .main-card {
       width: min(560px, 95vw);
-      background: var(--card);
+      margin: 10px auto;
+      background: rgba(255,255,255,0.95);
       border-radius: 28px;
-      box-shadow: var(--shadow);
-      padding: 28px 26px 32px;
+      box-shadow: 0 20px 60px rgba(232,150,182,0.4);
+      padding: 28px;
       text-align: center;
       position: relative;
-      z-index: 1;
+      z-index: 10;
       backdrop-filter: blur(16px);
-      border: 2px solid rgba(255, 255, 255, 0.7);
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease, border-color 0.6s ease;
-      margin: 10px auto 24px;
-      animation: cardEntrance 1s ease-out;
+      border: 2px solid rgba(255,255,255,0.7);
+      animation: card-entrance 1s ease-out;
+      transition: all 0.5s ease;
     }
-
-    @keyframes cardEntrance {
-      from { opacity: 0; transform: translateY(30px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .card:hover {
+    .main-card:hover {
       transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 28px 70px rgba(232, 150, 182, 0.5);
-      border-color: rgba(255, 143, 177, 0.8);
+      box-shadow: 0 28px 70px rgba(232,150,182,0.5);
+      border-color: rgba(255,143,177,0.8);
     }
 
-    .eyebrow {
+    .subtitle {
       font-size: 0.95rem;
       color: var(--muted);
       letter-spacing: 0.04em;
       margin-bottom: 8px;
-      animation: fadeSlideDown 0.8s ease-out 0.3s both;
+      animation: slide-down 0.8s ease-out 0.3s both;
     }
 
-    .headline {
-      font-size: 1.5rem;
+    .title {
+      font-size: clamp(1.5rem, 4vw, 1.65rem);
       font-weight: 700;
       margin-bottom: 16px;
-      animation: fadeSlideDown 0.8s ease-out 0.5s both;
-      background: linear-gradient(135deg, #2c1b2f 0%, #8b5a8e 100%);
+      background: linear-gradient(135deg, #2c1b2f, #8b5a8e);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: slide-down 0.8s ease-out 0.5s both;
     }
 
-    @keyframes fadeSlideDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .timer {
+    /* Timer */
+    .timer-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      margin: 12px 0 6px;
-      animation: fadeSlideUp 0.8s ease-out 0.7s both;
+      margin: 12px 0;
+      animation: slide-up 0.8s ease-out 0.7s both;
     }
 
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .time-box {
-      background: linear-gradient(145deg, #ffffff, #ffeaf3);
+    .timer-box {
+      background: linear-gradient(135deg, white, #ffeaf3);
       border-radius: 16px;
       padding: 16px 10px;
-      box-shadow: 0 4px 12px rgba(255, 143, 177, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      border: 1.5px solid rgba(255, 255, 255, 0.9);
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      box-shadow: 0 4px 12px rgba(255,143,177,0.15), inset 0 1px 0 rgba(255,255,255,0.9);
+      border: 1.5px solid rgba(255,255,255,0.9);
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
-
-    .time-box::before {
+    .timer-box:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(255,143,177,0.25);
+    }
+    .timer-box::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.6s ease;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    .timer-box:hover::after {
+      transform: translateX(100%);
     }
 
-    .time-box:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 8px 20px rgba(255, 143, 177, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
-    .time-box:hover::before { left: 100%; }
-
-    .time-value {
+    .timer-value {
       display: block;
       font-size: clamp(1.6rem, 5vw, 2.2rem);
       font-weight: 700;
-      animation: pulse 2s ease-in-out infinite;
-      background: linear-gradient(135deg, #2c1b2f 0%, #ff8fb1 100%);
+      background: linear-gradient(135deg, #2c1b2f, #ff8fb1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: pulse-scale 2s ease-in-out infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
-
-    .time-label {
+    .timer-label {
       font-size: 0.8rem;
       color: var(--muted);
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
 
-    .subtext {
+    .waiting-text {
       margin-top: 6px;
       font-size: 0.95rem;
       color: var(--muted);
-      animation: fadeSlideUp 0.8s ease-out 0.9s both;
+      animation: slide-up 0.8s ease-out 0.9s both;
     }
 
-    /* Food Hunting Journey Styles */
-    .journey {
-      margin-top: 18px;
-      padding: 20px 16px;
+    /* Food Hunting Section */
+    .food-section {
+      margin-top: 16px;
+      padding: 20px;
       border-radius: 18px;
-      background: rgba(255, 255, 255, 0.7);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 26px rgba(232, 150, 182, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: rgba(255,255,255,0.7);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 10px 26px rgba(232,150,182,0.15);
+      border: 1px solid rgba(255,255,255,0.8);
       backdrop-filter: blur(6px);
-      animation: fadeIn 1s ease-out 0.4s both;
     }
 
-    .journey-header {
+    .food-header {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -200,144 +183,142 @@
       margin-bottom: 16px;
     }
 
-    .journey-title-main {
+    .food-title {
       font-weight: 700;
       color: var(--text);
       font-size: 1.05rem;
       letter-spacing: 0.02em;
     }
 
-    .journey-list {
+    .sparkle-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Progress Dots */
+    .progress-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,143,177,0.3);
+      transition: all 0.4s ease;
+    }
+    .progress-dot.active {
+      background: linear-gradient(135deg, #ff8fb1, #cdb4ff);
+      transform: scale(1.3);
+      box-shadow: 0 2px 8px rgba(255,143,177,0.5);
+    }
+
+    /* Journey Cards */
+    .journey-cards {
       display: flex;
       flex-direction: column;
       gap: 0;
       margin-top: 10px;
     }
 
-    /* Journey Card Container with Arrow */
-    .journey-item {
-      position: relative;
-      animation: cardSlideIn 0.5s ease-out both;
-    }
-
-    @keyframes cardSlideIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Arrow Connector */
-    .journey-arrow {
+    .card-connector {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 12px 0;
       position: relative;
     }
-
-    .journey-arrow svg {
-      width: 32px;
-      height: 32px;
-      color: var(--pink);
-      filter: drop-shadow(0 2px 4px rgba(255, 143, 177, 0.3));
-      animation: arrowBounce 1.5s ease-in-out infinite;
-    }
-
-    @keyframes arrowBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); }
-    }
-
-    /* Dotted Line Behind Arrow */
-    .journey-arrow::before {
+    .card-connector::before {
       content: '';
       position: absolute;
       left: 50%;
       top: 0;
       bottom: 0;
       width: 2px;
-      background: repeating-linear-gradient(
-        to bottom,
-        var(--pink) 0px,
-        var(--pink) 4px,
-        transparent 4px,
-        transparent 8px
-      );
       transform: translateX(-50%);
+      background: repeating-linear-gradient(to bottom, #ff8fb1 0px, #ff8fb1 4px, transparent 4px, transparent 8px);
       z-index: -1;
     }
 
+    .chevron-down {
+      width: 32px;
+      height: 32px;
+      color: var(--pink);
+      filter: drop-shadow(0 2px 4px rgba(255,143,177,0.3));
+      animation: bounce-arrow 1.5s ease-in-out infinite;
+    }
+
     .journey-card {
+      position: relative;
+      animation: card-slide-in 0.5s ease-out both;
+    }
+
+    .journey-card-inner {
       padding: 16px;
       border-radius: 16px;
-      background: #fff;
-      border: 2px solid rgba(255, 143, 177, 0.2);
-      box-shadow: 0 8px 24px rgba(232, 150, 182, 0.18);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      background: white;
+      border: 2px solid rgba(255,143,177,0.2);
+      box-shadow: 0 8px 24px rgba(232,150,182,0.18);
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
-
-    .journey-card:hover {
+    .journey-card-inner:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(232, 150, 182, 0.25);
+      box-shadow: 0 12px 32px rgba(232,150,182,0.25);
       border-color: var(--pink);
     }
-
-    /* Shimmer Effect on Hover */
-    .journey-card::before {
+    .journey-card-inner::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transition: left 0.6s ease;
-      z-index: 1;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .journey-card-inner:hover::after {
+      transform: translateX(100%);
     }
 
-    .journey-card:hover::before {
-      left: 100%;
-    }
-
-    /* Stop Number Badge */
-    .journey-badge {
+    .stop-badge {
       position: absolute;
       top: -10px;
       left: 16px;
-      background: linear-gradient(135deg, var(--pink) 0%, #cdb4ff 100%);
-      color: #fff;
+      background: linear-gradient(135deg, #ff8fb1, #cdb4ff);
+      color: white;
       font-size: 0.75rem;
       font-weight: 700;
       padding: 4px 12px;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(255, 143, 177, 0.4);
-      z-index: 2;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(255,143,177,0.4);
+      z-index: 10;
     }
 
-    .journey-image {
+    .card-image {
       width: 100%;
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16/10;
       border-radius: 12px;
       overflow: hidden;
       background: linear-gradient(135deg, #ffeaf3, #f7e7f0);
       margin-bottom: 12px;
       margin-top: 6px;
     }
-
-    .journey-image img {
+    .card-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
       transition: transform 0.4s ease;
     }
-
-    .journey-card:hover .journey-image img {
+    .journey-card-inner:hover .card-image img {
       transform: scale(1.05);
     }
 
-    .journey-title {
+    .card-title {
       font-weight: 700;
       font-size: 1.05rem;
       color: var(--text);
@@ -345,308 +326,528 @@
       text-align: left;
     }
 
-    .journey-desc {
+    .card-desc {
       font-size: 0.9rem;
       color: var(--muted);
       line-height: 1.55;
       text-align: left;
     }
 
+    /* Footer */
     .journey-footer {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-top: 18px;
+      margin-top: 16px;
       align-items: center;
     }
 
-    .journey-counter {
+    .footer-text {
       font-size: 0.9rem;
       color: var(--muted);
       opacity: 0.9;
     }
 
-    /* Progress Dots */
-    .journey-progress {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 8px;
-    }
-
-    .journey-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 143, 177, 0.3);
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .journey-dot.active {
-      background: linear-gradient(135deg, var(--pink), #cdb4ff);
-      transform: scale(1.3);
-      box-shadow: 0 2px 8px rgba(255, 143, 177, 0.5);
-    }
-
-    .journey-button {
-      padding: 14px 28px;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #fff;
-      background: linear-gradient(135deg, #ff8fb1 0%, #cdb4ff 100%);
-      box-shadow: 0 10px 24px rgba(232, 150, 182, 0.4);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, opacity 0.2s ease;
-      min-width: 180px;
+    .next-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ff8fb1, #cdb4ff);
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      min-width: 180px;
+      box-shadow: 0 10px 24px rgba(232,150,182,0.4);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-
-    .journey-button svg {
-      width: 18px;
-      height: 18px;
-      transition: transform 0.3s ease;
-    }
-
-    .journey-button:hover:not(:disabled) svg {
-      transform: translateX(4px);
-    }
-
-    .journey-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      box-shadow: none;
-      transform: none;
-    }
-
-    .journey-button:hover:not(:disabled) {
+    .next-btn:hover {
       transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 14px 32px rgba(232, 150, 182, 0.5);
+      box-shadow: 0 14px 32px rgba(232,150,182,0.5);
     }
 
-    /* Roadmap */
+    .done-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,143,177,0.6), rgba(205,180,255,0.6));
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* Celebration Section */
+    .celebration {
+      animation: fade-in 0.3s ease-out;
+    }
+
+    .video-container {
+      width: 100%;
+      aspect-ratio: 9/16;
+      max-height: 70vh;
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffeaf3, #f7e7f0);
+      box-shadow: 0 8px 24px rgba(232,150,182,0.3), inset 0 1px 0 rgba(255,255,255,0.7);
+      margin-bottom: 16px;
+      border: 2px solid rgba(255,255,255,0.6);
+    }
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .celebration-title {
+      font-size: clamp(1.9rem, 6vw, 2.6rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ff8fb1, #e6d7ff, #ff8fb1);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: celebration 1.2s ease-out;
+    }
+
+    .celebration-text {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .celebration-note {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      opacity: 0.85;
+    }
+
+    /* Roadmap Section */
     .roadmap-section {
-      margin: 32px auto 12px;
+      margin-top: 32px;
+      margin-left: auto;
+      margin-right: auto;
       width: min(720px, 100%);
-      padding: 20px 12px 40px;
-      background: #f2f2f2;
+      padding: 20px;
+      padding-bottom: 40px;
+      background: linear-gradient(135deg, #fff5f8, #faf5ff, #f0f8ff);
       border-radius: 22px;
-      border: 1px solid #e5e5e5;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255,143,177,0.2);
+      box-shadow: 0 10px 28px rgba(232,150,182,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .roadmap-glow-tl {
+      position: absolute;
+      top: -80px;
+      left: -80px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(255,143,177,0.3), transparent 70%);
+      filter: blur(24px);
+    }
+    .roadmap-glow-br {
+      position: absolute;
+      bottom: -80px;
+      right: -80px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(205,180,255,0.3), transparent 70%);
+      filter: blur(24px);
+    }
+
+    /* Floating Particles */
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      animation: float-particle 5s ease-in-out infinite;
+    }
+
+    /* Aurora Wave */
+    .aurora {
+      position: absolute;
+      inset: 0;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .aurora-wave {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255,143,177,0.2), rgba(205,180,255,0.2), rgba(255,143,177,0.2));
+      animation: aurora 8s ease-in-out infinite;
     }
 
     .roadmap-title {
       font-size: 1.2rem;
       font-weight: 700;
       text-align: center;
-      color: #2c1b2f;
       margin-bottom: 8px;
+      position: relative;
+      z-index: 10;
+    }
+    .roadmap-title span {
+      background: linear-gradient(90deg, #ff8fb1, #cdb4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .roadmap-note {
+    .roadmap-subtitle {
       text-align: center;
       font-size: 0.95rem;
-      color: #5f4a60;
+      color: var(--muted);
       margin-bottom: 16px;
+      position: relative;
+      z-index: 10;
     }
 
-    .roadmap-figure {
+    .roadmap-content {
       width: 100%;
       overflow: hidden;
+      position: relative;
+      z-index: 10;
     }
 
-    .roadmap-svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .roadmap-date {
-      font-size: 0.95rem;
-      fill: #2c1b2f;
-      text-anchor: middle;
-      font-weight: 600;
-    }
-
-    .roadmap-weekday {
-      font-size: 0.85rem;
-      fill: #2c1b2f;
-      text-anchor: middle;
-      font-weight: 500;
-    }
-
-    .roadmap-node {
-      cursor: pointer;
-      transition: transform 0.25s ease;
-    }
-
-    .roadmap-node:hover {
-      transform: scale(1.05);
-    }
-
-    /* Roadmap modal */
-    .roadmap-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 30;
-    }
-
-    .roadmap-modal.show {
+    /* Mobile Roadmap */
+    .roadmap-mobile {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      padding: 16px 0;
     }
 
-    .roadmap-modal__card {
-      width: min(420px, 95vw);
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+    .roadmap-mobile-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .roadmap-connector {
+      width: 6px;
+      height: 56px;
+      border-radius: 999px;
+      position: relative;
       overflow: hidden;
-      border: 1px solid #f0dbe7;
+    }
+    .roadmap-connector-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, #ff8fb1, #e6d7ff, #cdb4ff);
+      animation: line-flow 2s ease-in-out infinite;
+    }
+    .roadmap-connector-trail {
+      position: absolute;
+      width: 100%;
+      height: 16px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.6), transparent);
+      animation: light-trail 2s ease-in-out infinite;
+    }
+
+    .star-btn {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .star-btn:hover {
+      transform: scale(1.1);
+    }
+    .star-btn:active {
+      transform: scale(0.95);
+    }
+
+    .star-wrapper {
       position: relative;
     }
 
-    .roadmap-modal__badge {
+    .pulse-ring {
       position: absolute;
-      top: 14px;
-      left: 14px;
-      background: #ff8fb1;
-      color: #fff;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pulse-ring-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,143,177,0.3), rgba(205,180,255,0.3));
+      animation: pulse-ring 2s ease-out infinite;
+    }
+
+    .orbit-wrapper {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .orbit {
+      width: 56px;
+      height: 56px;
+      position: relative;
+      animation: orbit 4s linear infinite;
+    }
+    .orbit-dot-1 {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      background: var(--pink);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--pink);
+    }
+    .orbit-dot-2 {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      background: var(--purple);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--purple);
+    }
+
+    .star-number {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
       font-weight: 700;
+      font-size: 14px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .star-title {
+      margin-top: 8px;
       font-size: 0.85rem;
-      padding: 6px 12px;
-      border-radius: 999px;
-      box-shadow: 0 6px 14px rgba(255, 143, 177, 0.35);
-      z-index: 2;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+      max-width: 120px;
+      text-align: center;
+      animation: fade-in-up 0.5s ease-out both;
     }
 
-    .roadmap-modal__img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      display: block;
+    /* Desktop Roadmap */
+    .roadmap-desktop {
+      display: none;
     }
 
-    .roadmap-modal__body {
-      padding: 16px 16px 18px;
+    @media (min-width: 640px) {
+      .roadmap-mobile {
+        display: none;
+      }
+      .roadmap-desktop {
+        display: block;
+      }
     }
 
-    .roadmap-modal__title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #2c1b2f;
-      margin-bottom: 6px;
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 50;
+      animation: fade-in 0.3s ease-out;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
     }
 
-    .roadmap-modal__desc {
-      font-size: 0.98rem;
-      color: #5f4a60;
-      line-height: 1.55;
-      margin-bottom: 10px;
+    .modal {
+      width: min(420px, 95vw);
+      max-height: 90vh;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(232,150,182,0.35);
+      overflow: hidden;
+      border: 1px solid #f0dbe7;
+      position: relative;
+      animation: modal-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .roadmap-modal__counter {
-      font-size: 0.9rem;
-      color: #8a728d;
-    }
-
-    .roadmap-modal__close {
+    .modal-close {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: #ffffff;
+      background: white;
       border: 1px solid #f0dbe7;
       border-radius: 50%;
       width: 34px;
       height: 34px;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      z-index: 20;
+      transition: background 0.2s ease;
     }
-
-    .roadmap-modal__close svg {
+    .modal-close:hover {
+      background: #fff5f8;
+    }
+    .modal-close svg {
       width: 18px;
       height: 18px;
-      color: #5f4a60;
-    }
-    /* Roadmap */
-    .roadmap-section {
-      margin: 32px auto 12px;
-      width: min(720px, 100%);
-      padding: 20px 12px 40px;
-      background: #f2f2f2;
-      border-radius: 22px;
-      border: 1px solid #e5e5e5;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+      color: var(--muted);
     }
 
-    .roadmap-title {
-      font-size: 1.2rem;
+    .modal-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: linear-gradient(135deg, #ff8fb1, #cdb4ff);
+      color: white;
       font-weight: 700;
-      text-align: center;
-      color: #2c1b2f;
-      margin-bottom: 8px;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      box-shadow: 0 6px 14px rgba(255,143,177,0.35);
+      z-index: 20;
     }
 
-    .roadmap-note {
-      text-align: center;
-      font-size: 0.95rem;
-      color: #5f4a60;
-      margin-bottom: 16px;
-    }
-
-    .roadmap-figure {
+    .modal-image {
       width: 100%;
+      height: 240px;
       overflow: hidden;
     }
-
-    .roadmap-svg {
+    .modal-image img {
       width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .roadmap-date {
-      font-size: 0.95rem;
-      fill: #2c1b2f;
-      text-anchor: middle;
-      font-weight: 600;
+    .modal-content {
+      padding: 16px;
+      padding-bottom: 20px;
     }
 
-    .roadmap-weekday {
+    .modal-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .modal-desc {
+      font-size: 0.98rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+
+    .modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-count {
+      font-size: 0.9rem;
+      color: #8a728d;
+    }
+
+    .modal-date {
       font-size: 0.85rem;
-      fill: #2c1b2f;
-      text-anchor: middle;
-      font-weight: 500;
+      color: var(--muted);
+      background: linear-gradient(90deg, #fff5f8, #faf5ff);
+      padding: 4px 12px;
+      border-radius: 999px;
     }
 
-    .section {
-      opacity: 0;
-      transform: translateY(15px) scale(0.98);
-      transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Hidden class */
+    .hidden {
+      display: none !important;
     }
 
-    .section.show { opacity: 1; transform: translateY(0) scale(1); }
-    .section.hidden { display: none; }
+    /* Animations */
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
 
-    .title {
-      font-size: clamp(1.9rem, 6vw, 2.6rem);
-      margin-bottom: 12px;
-      animation: celebration 1.2s ease-out;
-      background: linear-gradient(135deg, #ff8fb1 0%, #e6d7ff 50%, #ff8fb1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      background-size: 200% auto;
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.9; }
+      33% { transform: translateY(-30px) scale(1.1); opacity: 0.75; }
+      66% { transform: translateY(-15px) scale(0.95); opacity: 0.85; }
+    }
+
+    @keyframes card-entrance {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes slide-down {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse-scale {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    @keyframes bounce-arrow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
+    @keyframes card-slide-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes celebration {
@@ -655,508 +856,582 @@
       100% { opacity: 1; transform: scale(1) rotate(0deg); }
     }
 
-    .message {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: var(--muted);
-      margin-top: 10px;
-      animation: fadeIn 1.5s ease-out 0.5s both;
+    @keyframes float-particle {
+      0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.6; }
+      25% { transform: translateY(-30px) translateX(10px) scale(1.2); opacity: 1; }
+      50% { transform: translateY(-50px) translateX(-5px) scale(0.8); opacity: 0.4; }
+      75% { transform: translateY(-20px) translateX(15px) scale(1.1); opacity: 0.8; }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    @keyframes aurora {
+      0% { transform: translateX(-100%) skewX(-15deg); }
+      100% { transform: translateX(200%) skewX(-15deg); }
     }
 
-    .note {
-      margin-top: 16px;
-      font-size: 0.9rem;
-      color: var(--muted);
-      opacity: 0.85;
-      animation: fadeIn 1.5s ease-out 1s both;
+    @keyframes line-flow {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
     }
 
-    .video-wrapper {
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      max-height: 70vh;
-      border-radius: 20px;
-      overflow: hidden;
-      background: linear-gradient(135deg, #ffeaf3, #f7e7f0);
-      box-shadow: 0 8px 24px rgba(232, 150, 182, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.7);
-      margin-bottom: 18px;
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;
-      animation: videoReveal 1s ease-out;
-      border: 2px solid rgba(255, 255, 255, 0.6);
+    @keyframes light-trail {
+      0% { transform: translateY(-100%); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(400%); opacity: 0; }
     }
 
-    @keyframes videoReveal {
-      from { opacity: 0; transform: scale(0.9) rotateY(-10deg); }
-      to { opacity: 1; transform: scale(1) rotateY(0deg); }
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.3); opacity: 0; }
     }
 
-    .video-wrapper:hover {
-      transform: scale(1.02);
-      box-shadow: 0 12px 32px rgba(232, 150, 182, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    @keyframes orbit {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    .video-wrapper video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    @keyframes star-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
     }
 
-    @media (min-width: 640px) {
-      .card { padding: 34px 34px 38px; }
-      .headline { font-size: 1.65rem; }
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    @keyframes dash {
+      to { stroke-dashoffset: -100; }
+    }
+
+    @keyframes modal-pop {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="glow"></div>
-  <div class="glow"></div>
-  <div class="glow"></div>
 
-  <main class="card" aria-live="polite">
+  <!-- Floating Glows -->
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+
+  <!-- Main Card -->
+  <main class="main-card">
     <!-- Countdown Section -->
-    <section id="countdown-section" class="section show">
-      <p class="eyebrow">Countdown to someone special</p>
-      <h1 class="headline">A little surprise is on its way</h1>
-      <div class="timer" role="timer" aria-live="polite">
-        <div class="time-box">
-          <span id="hours" class="time-value">00</span>
-          <span class="time-label">Hours</span>
+    <section id="countdown-section">
+      <p class="subtitle">Countdown to someone special</p>
+      <h1 class="title">A little surprise is on its way</h1>
+
+      <!-- Timer -->
+      <div class="timer-grid">
+        <div class="timer-box">
+          <span class="timer-value" id="hours">00</span>
+          <span class="timer-label">Hours</span>
         </div>
-        <div class="time-box">
-          <span id="minutes" class="time-value">00</span>
-          <span class="time-label">Minutes</span>
+        <div class="timer-box">
+          <span class="timer-value" id="minutes">00</span>
+          <span class="timer-label">Minutes</span>
         </div>
-        <div class="time-box">
-          <span id="seconds" class="time-value">00</span>
-          <span class="time-label">Seconds</span>
+        <div class="timer-box">
+          <span class="timer-value" id="seconds">00</span>
+          <span class="timer-label">Seconds</span>
         </div>
       </div>
-      <p class="subtext">Hold on Wan Sulha, The magic moment arrives soon</p>
 
-      <!-- Food Hunting Journey -->
-      <div class="journey" aria-live="polite">
-        <div class="journey-header">
-          <p class="journey-title-main">FOOD HUNTING JOURNEY</p>
+      <p class="waiting-text">Hold on Wan Sulha, The magic moment arrives soon</p>
+
+      <!-- Food Hunting Section -->
+      <div class="food-section">
+        <div class="food-header">
+          <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" stroke="#ff8fb1" stroke-width="2">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+          </svg>
+          <p class="food-title">FOOD HUNTING JOURNEY</p>
+          <svg class="sparkle-icon" viewBox="0 0 24 24" fill="none" stroke="#cdb4ff" stroke-width="2">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+          </svg>
         </div>
-        
+
         <!-- Progress Dots -->
-        <div class="journey-progress" id="journey-progress">
-          <div class="journey-dot"></div>
-          <div class="journey-dot"></div>
-          <div class="journey-dot"></div>
-          <div class="journey-dot"></div>
-        </div>
-        
-        <div class="journey-list" id="journey-list"></div>
-        
+        <div class="progress-dots" id="progress-dots"></div>
+
+        <!-- Journey Cards -->
+        <div class="journey-cards" id="journey-cards"></div>
+
+        <!-- Footer -->
         <div class="journey-footer">
-          <p class="journey-counter" id="journey-counter">Tap start to reveal the first stop.</p>
-          <button class="journey-button" id="journey-action" type="button">
-            <span>Start Journey</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          <p class="footer-text" id="footer-text">Tap start to reveal the first stop.</p>
+          <div class="done-btn hidden" id="done-btn">
+            <span>All Done</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
             </svg>
-          </button>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Celebration Section -->
-    <section id="celebration-section" class="section" aria-hidden="true">
-      <div class="video-wrapper" aria-hidden="true">
-        <video id="love-video" playsinline muted loop controls autoplay poster="https://images.unsplash.com/photo-1511288593014-8acb33db1c83?auto=format&fit=crop&w=1200&q=80">
+    <section id="celebration-section" class="celebration hidden">
+      <div class="video-container">
+        <video autoplay loop muted playsinline controls>
           <source src="special.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
       </div>
-      <h1 class="title">Happy Birthday <br> Wan Sulha</h1>
-      <p class="message" id="love-message">
-        To my dearest Wan Sulha binti Wan Mohd Hasanul Isyraf,thank you for being my favorite friend, my sweetest calm, and my forever safe place.On your birthday, I want you to remember that I am always okay with being your friend forever,through every quiet moment and every adventure ahead. I truly love spending time with you, even if it’s only chatting online. I hope we can remain friends forever.I hope you will find success, do what makes you happy, and truly enjoy life,live a good life. Please don’t be sad all the time. Remember, Allah is always with you.I am waiting for our next meeting, and I hope you are always healthy. I pray only the best for you, always.
-
-Happy Birthday, Wan Sulha. 🤍
-      </p>
-      <p class="note">Confetti and a soft melody just for you.</p>
+      <h1 class="celebration-title">Happy Birthday<br>Wan Sulha</h1>
+      <p class="celebration-text">To my dearest Wan Sulha, thank you for being my favorite friend, my sweetest calm, and my forever safe place.</p>
+      <p class="celebration-note">Confetti and a soft melody just for you.</p>
     </section>
-
-    <audio id="bg-music" loop preload="auto">
-      <source src="https://cdn.pixabay.com/download/audio/2022/08/11/audio_5b2bf35e95.mp3?filename=gentle-happy-soft-piano-115278.mp3" type="audio/mpeg">
-    </audio>
   </main>
 
-  <section class="roadmap-section" aria-labelledby="roadmap-title">
-    <h2 id="roadmap-title" class="roadmap-title">Food Hunting Roadmap</h2>
-    <p class="roadmap-note">Milestones along our little journey — simple, clear, and scroll-friendly.</p>
-    <div class="roadmap-figure">
-      <svg class="roadmap-svg" viewBox="0 0 360 1100" role="img" aria-label="Food hunting roadmap">
-        <defs>
-          <path id="roadmap-star" d="M0,-18 L5,-6 L18,-6 L8,2 L12,14 L0,6 L-12,14 L-8,2 L-18,-6 L-5,-6 Z" />
-        </defs>
-        <path d="M60 80 Q220 140 160 220 T220 360 T120 520 T230 700 T120 900 T200 1040"
-          fill="none"
-          stroke="#c7c7c7"
-          stroke-width="6"
-          stroke-dasharray="12 12"
-          stroke-linecap="round"
-          stroke-linejoin="round" />
+  <!-- Roadmap Section -->
+  <section class="roadmap-section">
+    <div class="roadmap-glow-tl"></div>
+    <div class="roadmap-glow-br"></div>
 
-        <g class="roadmap-node" data-step="0" transform="translate(70 120)">
-          <use href="#roadmap-star" fill="#ffffff" stroke="#c7c7c7" stroke-width="2" />
-          <text class="roadmap-date" x="0" y="-32">25-12-2025</text>
-          <text class="roadmap-weekday" x="0" y="-14">Thursday</text>
-        </g>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
 
-        <g class="roadmap-node" data-step="1" transform="translate(230 240)">
-          <use href="#roadmap-star" fill="#ffffff" stroke="#c7c7c7" stroke-width="2" transform="scale(1.2)" />
-          <text class="roadmap-date" x="0" y="-36">25-12-2025</text>
-          <text class="roadmap-weekday" x="0" y="-18">Thursday</text>
-        </g>
+    <!-- Aurora Wave -->
+    <div class="aurora">
+      <div class="aurora-wave"></div>
+    </div>
 
-        <g class="roadmap-node" data-step="2" transform="translate(140 390)">
-          <use href="#roadmap-star" fill="#ffffff" stroke="#c7c7c7" stroke-width="2" />
-          <text class="roadmap-date" x="0" y="-32">25-12-2025</text>
-          <text class="roadmap-weekday" x="0" y="-14">Thursday</text>
-        </g>
+    <h2 class="roadmap-title"><span>Food Hunting Roadmap</span></h2>
+    <p class="roadmap-subtitle">Milestones along our little journey — tap any star to see details</p>
 
-        <g class="roadmap-node" data-step="3" transform="translate(250 560)">
-          <use href="#roadmap-star" fill="#ffffff" stroke="#c7c7c7" stroke-width="2" transform="scale(1.2)" />
-          <text class="roadmap-date" x="0" y="-36">25-12-2025</text>
-          <text class="roadmap-weekday" x="0" y="-18">Thursday</text>
-        </g>
+    <div class="roadmap-content">
+      <!-- Mobile Layout -->
+      <div class="roadmap-mobile" id="roadmap-mobile"></div>
 
-        <g class="roadmap-node" data-step="4" transform="translate(140 740)">
-          <use href="#roadmap-star" fill="#ffffff" stroke="#c7c7c7" stroke-width="2" />
-          <text class="roadmap-date" x="0" y="-32">25-12-2025</text>
-          <text class="roadmap-weekday" x="0" y="-14">Thursday</text>
-        </g>
+      <!-- Desktop Layout -->
+      <div class="roadmap-desktop">
+        <svg width="100%" height="auto" viewBox="0 0 360 1100" role="img" aria-label="Food hunting roadmap">
+          <defs>
+            <linearGradient id="pathGradAnimated" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ff8fb1">
+                <animate attributeName="stop-color" values="#ff8fb1;#cdb4ff;#ff8fb1" dur="4s" repeatCount="indefinite"/>
+              </stop>
+              <stop offset="25%" stop-color="#e6d7ff">
+                <animate attributeName="stop-color" values="#e6d7ff;#ff8fb1;#e6d7ff" dur="4s" repeatCount="indefinite"/>
+              </stop>
+              <stop offset="50%" stop-color="#cdb4ff">
+                <animate attributeName="stop-color" values="#cdb4ff;#e6d7ff;#cdb4ff" dur="4s" repeatCount="indefinite"/>
+              </stop>
+              <stop offset="75%" stop-color="#f6d3ff">
+                <animate attributeName="stop-color" values="#f6d3ff;#cdb4ff;#f6d3ff" dur="4s" repeatCount="indefinite"/>
+              </stop>
+              <stop offset="100%" stop-color="#ff8fb1">
+                <animate attributeName="stop-color" values="#ff8fb1;#f6d3ff;#ff8fb1" dur="4s" repeatCount="indefinite"/>
+              </stop>
+            </linearGradient>
 
-        <g class="roadmap-node" data-step="5" transform="translate(230 930)">
-          <use href="#roadmap-star" fill="#ffffff" stroke="#c7c7c7" stroke-width="2" transform="scale(1.4)" />
-          <text class="roadmap-date" x="0" y="-42">25-12-2025</text>
-          <text class="roadmap-weekday" x="0" y="-22">Thursday</text>
-        </g>
-      </svg>
+            <linearGradient id="starGradSvgAnimated" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff8fb1">
+                <animate attributeName="stop-color" values="#ff8fb1;#ffeaf3;#ff8fb1" dur="2s" repeatCount="indefinite"/>
+              </stop>
+              <stop offset="50%" stop-color="#ffeaf3"/>
+              <stop offset="100%" stop-color="#cdb4ff">
+                <animate attributeName="stop-color" values="#cdb4ff;#ff8fb1;#cdb4ff" dur="2s" repeatCount="indefinite"/>
+              </stop>
+            </linearGradient>
+
+            <linearGradient id="starStrokeSvg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff8fb1"/>
+              <stop offset="100%" stop-color="#cdb4ff"/>
+            </linearGradient>
+
+            <filter id="starGlowEnhanced">
+              <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+
+            <filter id="orbGlow">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+
+            <path id="roadmap-star" d="M0,-18 L5,-6 L18,-6 L8,2 L12,14 L0,6 L-12,14 L-8,2 L-18,-6 L-5,-6 Z"/>
+            <path id="travelPath" d="M60 80 Q220 140 160 220 T220 360 T120 520 T230 700 T120 900 T200 1040" fill="none"/>
+          </defs>
+
+          <!-- Path glow background -->
+          <path d="M60 80 Q220 140 160 220 T220 360 T120 520 T230 700 T120 900 T200 1040"
+            fill="none" stroke="url(#pathGradAnimated)" stroke-width="16"
+            stroke-linecap="round" stroke-linejoin="round" opacity="0.2" style="filter: blur(4px)"/>
+
+          <!-- Main Gradient Path -->
+          <path d="M60 80 Q220 140 160 220 T220 360 T120 520 T230 700 T120 900 T200 1040"
+            fill="none" stroke="url(#pathGradAnimated)" stroke-width="6"
+            stroke-dasharray="12 12" stroke-linecap="round" stroke-linejoin="round"
+            style="animation: dash 20s linear infinite"/>
+
+          <!-- Traveling Orb 1 -->
+          <circle r="8" fill="#ff8fb1" filter="url(#orbGlow)">
+            <animateMotion dur="8s" repeatCount="indefinite">
+              <mpath href="#travelPath"/>
+            </animateMotion>
+            <animate attributeName="r" values="6;10;6" dur="1s" repeatCount="indefinite"/>
+            <animate attributeName="fill" values="#ff8fb1;#cdb4ff;#e6d7ff;#ff8fb1" dur="4s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Traveling Orb 2 -->
+          <circle r="5" fill="#cdb4ff" filter="url(#orbGlow)" opacity="0.7">
+            <animateMotion dur="8s" repeatCount="indefinite" begin="4s">
+              <mpath href="#travelPath"/>
+            </animateMotion>
+            <animate attributeName="r" values="4;7;4" dur="1.2s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Star Nodes - will be generated by JS -->
+          <g id="desktop-stars"></g>
+        </svg>
+      </div>
     </div>
   </section>
 
-  <div class="roadmap-modal" id="roadmap-modal" role="dialog" aria-modal="true" aria-label="Roadmap stop details">
-    <div class="roadmap-modal__card">
-      <button class="roadmap-modal__close" id="roadmap-close" aria-label="Close">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
         </svg>
       </button>
-      <span class="roadmap-modal__badge" id="roadmap-badge">Stop 1</span>
-      <img class="roadmap-modal__img" id="roadmap-img" src="" alt="Roadmap stop">
-      <div class="roadmap-modal__body">
-        <p class="roadmap-modal__title" id="roadmap-title-text">Title</p>
-        <p class="roadmap-modal__desc" id="roadmap-desc">Description</p>
-        <p class="roadmap-modal__counter" id="roadmap-counter">1 of 6</p>
+      <span class="modal-badge" id="modal-badge">Stop 1</span>
+      <div class="modal-image">
+        <img id="modal-img" src="/placeholder.svg" alt="">
+      </div>
+      <div class="modal-content">
+        <p class="modal-title" id="modal-title"></p>
+        <p class="modal-desc" id="modal-desc"></p>
+        <div class="modal-footer">
+          <p class="modal-count" id="modal-count"></p>
+          <p class="modal-date" id="modal-date"></p>
+        </div>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
-
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const isDemo = params.get('demo') === '1' || window.location.hash === '#demo';
-    const targetDate = isDemo
-      ? new Date(Date.now() + 20_000)
-      : new Date(Date.now() + 2 * 60 * 1000); // temporary demo: 2 minutes from now
+    // Journey Steps Data
+    const journeySteps = [
+      {
+        title: "Breakfast Kickoff",
+        desc: "Random breakfast kat Batu Pahat",
+        img: "breakfast.jpeg",
+        date: "25-12-2025",
+        weekday: "Thursday"
+      },
+      {
+        title: "IKEA Bites",
+        desc: "Ikea food just so so puas bfr final paper",
+        img: "ikea.jpeg",
+        date: "10-07-2024",
+        weekday: "Thursday"
+      },
+      {
+        title: "Dessert in Melaka",
+        desc: "Jalan jalan kat Melaka",
+        img: "desert melaka.jpeg",
+        date: "02-12-2023",
+        weekday: "Thursday"
+      },
+      {
+        title: "Makan Bun",
+        desc: "Makan Bun Hitam tu sedap tapi tak ingat nama kedai huhu",
+        img: "makan bun.jpeg",
+        date: "04-05-2023",
+        weekday: "Thursday"
+      },
+      {
+        title: "llallao Treat",
+        desc: "Last Dessert after long day of shopping.",
+        img: "llallao dessert.jpeg",
+        date: "03-06-2023",
+        weekday: "Thursday"
+      },
+      {
+        title: "Toye T20 Night",
+        desc: "Cuba cuba toye T20",
+        img: "toye t20.jpeg",
+        date: "09-07-2023",
+        weekday: "Thursday"
+      }
+    ];
 
-    const countdownSection = document.getElementById('countdown-section');
-    const celebrationSection = document.getElementById('celebration-section');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
-    const bgMusic = document.getElementById('bg-music');
-    const loveVideo = document.getElementById('love-video');
-    const journeyList = document.getElementById('journey-list');
-    const journeyCounter = document.getElementById('journey-counter');
-    const journeyAction = document.getElementById('journey-action');
-    const journeyProgress = document.getElementById('journey-progress');
-    const roadmapNodes = document.querySelectorAll('.roadmap-node');
-    const roadmapModal = document.getElementById('roadmap-modal');
-    const roadmapClose = document.getElementById('roadmap-close');
-    const roadmapBadge = document.getElementById('roadmap-badge');
-    const roadmapImg = document.getElementById('roadmap-img');
-    const roadmapTitleText = document.getElementById('roadmap-title-text');
-    const roadmapDesc = document.getElementById('roadmap-desc');
-    const roadmapCounter = document.getElementById('roadmap-counter');
-
-    let countdownInterval = null;
-    let hasCelebrated = false;
     let currentStep = 0;
 
-    const pad = (num) => String(num).padStart(2, '0');
+    // Target: 16 January 2026, 00:00 (Malaysia time, UTC+8)
+    const targetDate = new Date('2026-01-16T00:00:00+08:00');
 
-    function startCountdown() {
-      const update = () => {
-        const now = new Date();
-        const diff = targetDate - now;
-
-        if (diff <= 0) {
-          triggerCelebration();
-          return;
-        }
-
-        const totalSeconds = Math.floor(diff / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        hoursEl.textContent = pad(hours);
-        minutesEl.textContent = pad(minutes);
-        secondsEl.textContent = pad(seconds);
-      };
-
-      update();
-      countdownInterval = setInterval(update, 1000);
+    // Initialize
+    function init() {
+      createProgressDots();
+      createParticles();
+      createMobileRoadmap();
+      createDesktopStars();
+      updateTimer();
+      setInterval(updateTimer, 1000);
     }
 
-    function triggerCelebration() {
-      if (hasCelebrated) return;
-      hasCelebrated = true;
+    // Timer
+    function updateTimer() {
+      const now = new Date();
+      const diff = targetDate.getTime() - now.getTime();
 
-      if (countdownInterval) {
-        clearInterval(countdownInterval);
+      if (diff <= 0) {
+        showCelebration();
+        return;
       }
 
-      countdownSection.classList.remove('show');
-      countdownSection.setAttribute('aria-hidden', 'true');
-      celebrationSection.setAttribute('aria-hidden', 'false');
+      const totalSeconds = Math.floor(diff / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
 
-      setTimeout(() => {
-        celebrationSection.classList.add('show');
-      }, 50);
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
 
-      setTimeout(() => {
-        countdownSection.classList.add('hidden');
-        celebrationSection.classList.add('show');
-      }, 50);
+    function showCelebration() {
+      document.getElementById('countdown-section').classList.add('hidden');
+      document.getElementById('celebration-section').classList.remove('hidden');
+    }
 
-      const duration = 3000;
-      const end = Date.now() + duration;
-      (function frame() {
-        confetti({
-          particleCount: 70,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#ff8fb1', '#ffc6d9', '#ffe4ed', '#cdb4ff']
-        });
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      })();
+    // Progress Dots
+    function createProgressDots() {
+      const container = document.getElementById('progress-dots');
+      container.innerHTML = journeySteps.map((_, i) => 
+        `<div class="progress-dot ${i < currentStep ? 'active' : ''}" id="dot-${i}"></div>`
+      ).join('');
+    }
 
-      bgMusic.volume = 0.4;
-      const playPromise = bgMusic.play();
-      if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(() => {
-          document.body.addEventListener('click', () => bgMusic.play(), { once: true });
-        });
-      }
-
-      if (loveVideo) {
-        const unmuteAndPlay = () => {
-          loveVideo.muted = false;
-          loveVideo.volume = 1;
-          const p = loveVideo.play();
-          if (p && typeof p.catch === 'function') {
-            p.catch(() => {
-              document.body.addEventListener('click', () => loveVideo.play(), { once: true });
-            });
-          }
-        };
-
-        loveVideo.muted = true;
-        loveVideo.autoplay = true;
-        const videoPromise = loveVideo.play();
-
-        if (videoPromise && typeof videoPromise.then === 'function') {
-          videoPromise
-            .then(() => {
-              setTimeout(unmuteAndPlay, 200);
-            })
-            .catch(() => {
-              document.body.addEventListener('click', unmuteAndPlay, { once: true });
-            });
-        } else {
-          document.body.addEventListener('click', unmuteAndPlay, { once: true });
-        }
+    // Next Stop
+    function nextStop() {
+      if (currentStep < journeySteps.length) {
+        currentStep++;
+        updateJourney();
       }
     }
 
-     // Food Hunting Journey Data (local images)
-     const journeySteps = [
-       {
-         title: 'Breakfast Kickoff',
-         desc: 'Random breakfast kat Batu Pahat',
-         img: 'breakfast.jpeg'
-       },
-       {
-         title: 'IKEA Bites',
-         desc: 'Ikea food just so so puas bfr final paper',
-         img: 'ikea.jpeg'
-       },
-       {
-         title: 'Dessert in Melaka',
-         desc: 'Jalan jalan kat Melaka ',
-         img: 'desert melaka.jpeg'
-       },
-       {
-         title: 'Makan Bun',
-         desc: 'Makan Bun Hitam tu sedap tapi tak ingat nama kedai huhu ',
-         img: 'makan bun.jpeg'
-       },
-       {
-         title: 'llallao Treat',
-         desc: 'Last Dessert after long day of shopping.',
-         img: 'llallao dessert.jpeg'
-       },
-       {
-         title: 'Toye T20 Night',
-         desc: 'Cuba cuba toye T20',
-         img: 'toye t20.jpeg'
-       }
-     ];
+    function updateJourney() {
+      // Update dots
+      journeySteps.forEach((_, i) => {
+        const dot = document.getElementById(`dot-${i}`);
+        if (dot) dot.className = `progress-dot ${i < currentStep ? 'active' : ''}`;
+      });
 
-     // Arrow SVG template
-     const arrowSVG = `
-       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-         <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-       </svg>
-     `;
-
-    function appendJourneyCard(step, index) {
-      if (!journeyList) return;
-
-       // Add arrow before card (except first card)
-       if (index > 0) {
-         const arrow = document.createElement('div');
-         arrow.className = 'journey-arrow';
-         arrow.innerHTML = arrowSVG;
-         arrow.style.animationDelay = `${index * 0.1}s`;
-         journeyList.appendChild(arrow);
-       }
-
-      const item = document.createElement('div');
-      item.className = 'journey-item';
-      item.style.animationDelay = `${index * 0.15}s`;
-      
-      item.innerHTML = `
-        <div class="journey-card">
-          <span class="journey-badge">Stop ${index + 1}</span>
-          <div class="journey-image">
-            <img src="${step.img}" alt="${step.title}" loading="lazy">
+      // Update cards
+      const cardsContainer = document.getElementById('journey-cards');
+      let html = '';
+      for (let i = 0; i < currentStep; i++) {
+        const step = journeySteps[i];
+        if (i > 0) {
+          html += `
+            <div class="card-connector">
+              <svg class="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </div>
+          `;
+        }
+        html += `
+          <div class="journey-card" style="animation-delay: ${i * 0.1}s">
+            <div class="journey-card-inner">
+              <span class="stop-badge">Stop ${i + 1}</span>
+              <div class="card-image">
+                <img src="${step.img}" alt="${step.title}">
+              </div>
+              <p class="card-title">${step.title}</p>
+              <p class="card-desc">${step.desc}</p>
+            </div>
           </div>
-          <p class="journey-title">${step.title}</p>
-          <p class="journey-desc">${step.desc}</p>
-        </div>
-      `;
-      
-      journeyList.appendChild(item);
+        `;
+      }
+      cardsContainer.innerHTML = html;
 
-       // Update progress dots
-       if (journeyProgress) {
-         const dots = journeyProgress.querySelectorAll('.journey-dot');
-         if (dots[index]) {
-           dots[index].classList.add('active');
-         }
-       }
-    }
+      // Update footer
+      const footerText = document.getElementById('footer-text');
+      const nextBtn = document.getElementById('next-btn');
+      const doneBtn = document.getElementById('done-btn');
 
-    function updateJourneyCounter() {
-      if (!journeyCounter) return;
-      const shown = Math.min(currentStep, journeySteps.length);
-      if (shown === 0) {
-        journeyCounter.textContent = 'Tap start to reveal the first stop.';
-      } else if (shown >= journeySteps.length) {
-        journeyCounter.textContent = 'Hope to get more time to go food hunting with you';
+      if (currentStep === 0) {
+        footerText.textContent = 'Tap start to reveal the first stop.';
+        nextBtn.classList.remove('hidden');
+        doneBtn.classList.add('hidden');
+      } else if (currentStep >= journeySteps.length) {
+        footerText.textContent = 'Hope to get more time to go food hunting with you';
+        nextBtn.classList.add('hidden');
+        doneBtn.classList.remove('hidden');
       } else {
-        journeyCounter.textContent = `${shown} of ${journeySteps.length} stops revealed`;
+        footerText.textContent = `${currentStep} of ${journeySteps.length} stops revealed`;
+        nextBtn.classList.remove('hidden');
+        doneBtn.classList.add('hidden');
       }
     }
 
-    function openRoadmapModal(index) {
+    // Particles
+    function createParticles() {
+      const container = document.getElementById('particles');
+      const colors = ['#ff8fb1', '#cdb4ff', '#e6d7ff'];
+      let html = '';
+      for (let i = 0; i < 20; i++) {
+        const color = colors[i % 3];
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const delay = i * 0.3;
+        const duration = 3 + Math.random() * 4;
+        html += `<div class="particle" style="left:${left}%;top:${top}%;background:${color};animation-delay:${delay}s;animation-duration:${duration}s"></div>`;
+      }
+      container.innerHTML = html;
+    }
+
+    // Mobile Roadmap
+    function createMobileRoadmap() {
+      const container = document.getElementById('roadmap-mobile');
+      let html = '';
+      journeySteps.forEach((step, index) => {
+        html += `<div class="roadmap-mobile-item">`;
+        if (index > 0) {
+          html += `
+            <div class="roadmap-connector">
+              <div class="roadmap-connector-bg"></div>
+              <div class="roadmap-connector-trail"></div>
+            </div>
+          `;
+        }
+        html += `
+          <button class="star-btn" onclick="openModal(${index})">
+            <div class="star-wrapper">
+              <div class="pulse-ring">
+                <div class="pulse-ring-circle" style="animation-delay:${index * 0.2}s"></div>
+              </div>
+              <div class="orbit-wrapper">
+                <div class="orbit" style="animation-delay:${index * 0.5}s">
+                  <div class="orbit-dot-1"></div>
+                  <div class="orbit-dot-2"></div>
+                </div>
+              </div>
+              <svg width="${index === journeySteps.length - 1 ? 64 : 52}" height="${index === journeySteps.length - 1 ? 64 : 52}" viewBox="-20 -20 40 40"
+                style="filter: drop-shadow(0 4px 12px rgba(255,143,177,0.5)); animation: star-bob 2s ease-in-out infinite; animation-delay: ${index * 0.15}s">
+                <defs>
+                  <linearGradient id="starGradMobile${index}" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff8fb1">
+                      <animate attributeName="stop-color" values="#ff8fb1;#cdb4ff;#ff8fb1" dur="3s" repeatCount="indefinite"/>
+                    </stop>
+                    <stop offset="50%" stop-color="#e6d7ff"/>
+                    <stop offset="100%" stop-color="#cdb4ff">
+                      <animate attributeName="stop-color" values="#cdb4ff;#ff8fb1;#cdb4ff" dur="3s" repeatCount="indefinite"/>
+                    </stop>
+                  </linearGradient>
+                  <filter id="glowMobile${index}">
+                    <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                    <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+                <path d="M0,-18 L5,-6 L18,-6 L8,2 L12,14 L0,6 L-12,14 L-8,2 L-18,-6 L-5,-6 Z"
+                  fill="url(#starGradMobile${index})" stroke="white" stroke-width="1.5" filter="url(#glowMobile${index})"
+                  style="animation: twinkle 1.5s ease-in-out infinite; animation-delay: ${index * 0.2}s"/>
+              </svg>
+              <span class="star-number">${index + 1}</span>
+            </div>
+            <p class="star-title" style="animation-delay:${index * 0.1}s">${step.title}</p>
+          </button>
+        </div>`;
+      });
+      container.innerHTML = html;
+    }
+
+    // Desktop Stars
+    function createDesktopStars() {
+      const positions = [
+        { x: 70, y: 120, scale: 1 },
+        { x: 230, y: 240, scale: 1.2 },
+        { x: 140, y: 390, scale: 1 },
+        { x: 250, y: 560, scale: 1.2 },
+        { x: 140, y: 740, scale: 1 },
+        { x: 230, y: 930, scale: 1.4 }
+      ];
+
+      const container = document.getElementById('desktop-stars');
+      let html = '';
+
+      positions.forEach((pos, index) => {
+        html += `
+          <g class="cursor-pointer" transform="translate(${pos.x} ${pos.y})" onclick="openModal(${index})" style="cursor:pointer">
+            <!-- Pulse rings -->
+            <circle r="${25 * pos.scale}" fill="none" stroke="url(#starStrokeSvg)" stroke-width="2" opacity="0.3">
+              <animate attributeName="r" values="${20 * pos.scale};${35 * pos.scale};${20 * pos.scale}" dur="2s" repeatCount="indefinite" begin="${index * 0.3}s"/>
+              <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite" begin="${index * 0.3}s"/>
+            </circle>
+            <circle r="${25 * pos.scale}" fill="none" stroke="url(#pathGradAnimated)" stroke-width="1.5" opacity="0.2">
+              <animate attributeName="r" values="${18 * pos.scale};${32 * pos.scale};${18 * pos.scale}" dur="2s" repeatCount="indefinite" begin="${index * 0.3 + 1}s"/>
+              <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite" begin="${index * 0.3 + 1}s"/>
+            </circle>
+            <!-- Orbiting sparkles -->
+            <g style="animation: orbit 4s linear infinite; transform-origin: 0 0">
+              <circle cx="${22 * pos.scale}" cy="0" r="2" fill="#ff8fb1">
+                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="${-22 * pos.scale}" cy="0" r="1.5" fill="#cdb4ff">
+                <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+            <!-- Star shape -->
+            <use href="#roadmap-star" fill="url(#starGradSvgAnimated)" stroke="white" stroke-width="1.5"
+              transform="scale(${pos.scale})" filter="url(#starGlowEnhanced)" style="transform-origin: 0 0">
+              <animateTransform attributeName="transform" type="scale"
+                values="${pos.scale};${pos.scale * 1.08};${pos.scale}" dur="2s" repeatCount="indefinite" begin="${index * 0.2}s"/>
+            </use>
+            <!-- Stop number -->
+            <text x="0" y="4" text-anchor="middle" fill="white" font-size="${12 * pos.scale}" font-weight="bold"
+              style="pointer-events:none; text-shadow: 0 2px 4px rgba(0,0,0,0.2)">${index + 1}</text>
+            <!-- Title label -->
+            <text x="0" y="${-32 * pos.scale}" text-anchor="middle" fill="#2c1b2f" font-size="14" font-weight="600"
+              style="pointer-events:none">${journeySteps[index].title}</text>
+          </g>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // Modal
+    function openModal(index) {
       const step = journeySteps[index];
-      if (!step || !roadmapModal) return;
-      roadmapBadge.textContent = `Stop ${index + 1}`;
-      roadmapImg.src = step.img;
-      roadmapImg.alt = step.title;
-      roadmapTitleText.textContent = step.title;
-      roadmapDesc.textContent = step.desc;
-      roadmapCounter.textContent = `${index + 1} of ${journeySteps.length}`;
-      roadmapModal.classList.add('show');
+      document.getElementById('modal-badge').textContent = `Stop ${index + 1}`;
+      document.getElementById('modal-img').src = step.img;
+      document.getElementById('modal-img').alt = step.title;
+      document.getElementById('modal-title').textContent = step.title;
+      document.getElementById('modal-desc').textContent = step.desc;
+      document.getElementById('modal-count').textContent = `${index + 1} of ${journeySteps.length}`;
+      document.getElementById('modal-date').textContent = step.date;
+      document.getElementById('modal-overlay').classList.add('open');
     }
 
-    function closeRoadmapModal() {
-      roadmapModal?.classList.remove('show');
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
     }
 
-    function handleJourneyAction() {
-      if (currentStep >= journeySteps.length) return;
-      appendJourneyCard(journeySteps[currentStep], currentStep);
-      currentStep += 1;
-      updateJourneyCounter();
-
-      if (currentStep >= journeySteps.length) {
-        journeyAction.innerHTML = `
-          <span>All Done</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        `;
-        journeyAction.disabled = true;
-      } else {
-        journeyAction.innerHTML = `
-          <span>Next Stop</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        `;
-      }
-    }
-
-    function initJourney() {
-      if (!journeyAction) return;
-      if (journeyProgress) {
-        journeyProgress.innerHTML = '';
-        journeySteps.forEach(() => {
-          const dot = document.createElement('div');
-          dot.className = 'journey-dot';
-          journeyProgress.appendChild(dot);
-        });
-      }
-      updateJourneyCounter();
-      journeyAction.addEventListener('click', handleJourneyAction);
-
-      // Roadmap click handlers
-      roadmapNodes.forEach((node) => {
-        node.addEventListener('click', () => {
-          const idx = Number(node.getAttribute('data-step'));
-          if (!Number.isNaN(idx)) {
-            openRoadmapModal(idx);
-          }
-        });
-      });
-
-      roadmapClose?.addEventListener('click', closeRoadmapModal);
-      roadmapModal?.addEventListener('click', (e) => {
-        if (e.target === roadmapModal) closeRoadmapModal();
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      startCountdown();
-      initJourney();
+    // Keyboard close modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
     });
+
+    // Initialize on load
+    init();
   </script>
+
 </body>
 </html>
