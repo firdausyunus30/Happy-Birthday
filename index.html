@@ -405,12 +405,12 @@
   <script>
     // ===== Configuration: easily edit target date or message =====
     // Add ?demo=1 or #demo to the URL to see a 20-second preview immediately.
-    // Target moment: 15 January 2026, 12:31 PM (Malaysia time, UTC+8)
+    // Target moment: 15 January 2026, 12:50 PM (Malaysia time, UTC+8)
     const params = new URLSearchParams(window.location.search);
     const isDemo = params.get('demo') === '1' || window.location.hash === '#demo';
     const targetDate = isDemo
       ? new Date(Date.now() + 20_000) // quick preview
-      : new Date('2026-01-15T12:31:00+08:00');
+      : new Date('2026-01-15T12:50:00+08:00');
 
     const countdownSection = document.getElementById('countdown-section');
     const celebrationSection = document.getElementById('celebration-section');
